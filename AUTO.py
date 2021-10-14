@@ -318,5 +318,5 @@ while True:
 
     except Exception as e:
         print("ERROR")
-        post_message(myToken, "#bitcoin-stock", "에러발생")
+        telegram_send(f'🚨 에러 발생\n{traceback.format_exc()}')
         time.sleep(0.5)
