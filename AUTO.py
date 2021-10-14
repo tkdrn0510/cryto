@@ -112,6 +112,43 @@ buy_time_data = {}
 if __name__ == "__main__":
     fmt = "%Y-%m-%d %H:%M:%S"
 
+def telegram_send(message):
+    telegram_bot.sendMessage(chat_id=telegram_chat_id, text='[UPbit 자동매매]\n'+message)
+
+
+# # Load saved data
+# try:
+#     with open("data.json") as f:
+#         data_loaded = json.loads(f.read())
+#
+#     updated_at = datetime.datetime.strptime(data_loaded['updated_at'], '%Y-%m-%d %H:%M:%S')
+#
+# except:
+#     first_time = True
+#
+# if first_time:
+#     updated_at = datetime.datetime.now()
+#     top_k_list = get_top_k(top_k)
+#     highest_price = get_highest_price(top_k_list)
+#     ma_list = get_ma_list(top_k_list, 5)
+#     balance = upbit.get_balance(ticker="KRW")
+#     hold = []
+
+updated_at = datetime.datetime.now(timezone('Asia/Seoul'))
+top_k_list = get_top_k(top_k)
+target_price_list = get_target_price_list(top_k_list, k_value)
+highest_price = get_highest_price(top_k_list)
+ma_list = get_ma_list(top_k_list, 5)
+balance = upbit.get_balance(ticker="KRW")
+hold = []
+highest_price = get_highest_price(top_k_list)
+high_price_track = highest_price
+buy_list = []
+buy_price = dict()
+first_day = True
+
+telegram_send('📢 프로그램 시작')
+
 #코인티커 순서 확인 문자
 a = 0
 
