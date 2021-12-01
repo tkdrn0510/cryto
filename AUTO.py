@@ -274,18 +274,17 @@ while True:
                     if buy_time_data[tickers] == True and buy_price[tickers] == 0:
                         # 매수조건 = 9분 평균선이 MACD선(12분-21분) 을 상향돌파 즉,골든크로스 발생
                         if tickers_signal < (tickers_ma12 - tickers_ma21):
-                            if current_price_list[ticker] > target_price_list[ticker] and current_price_list[ticker] > \
-                                    ma_list[ticker] and len(buy_list) < portfolio_limit and buymode:
-                                        response = upbit.buy_market_order(ticker, balance / portfolio_limit * (1 - fee))
-                                        high_price_track[ticker] = current_price_list[ticker]
-                                        hold.append(ticker)
-                                        buy_price[ticker] = current_price_list[ticker]
-                                        buy_list.append(ticker)
-                                        telegram_send(f'🛒 목표가 매수\n종목: {ticker}\n매수가: {current_price_list[ticker]}\n목표가: {target_price_list[ticker]}\n{response}')
-                                        buy_time_data.update({tickers: False})
-                                        buy_price.update({tickers: tickers_now_price2})
-                                        d = int(buy_price[tickers])
-                                        a = a + 1
+                            if current_price_list[ticker] > target_price_list[ticker] and current_price_list[ticker] > ma_list[ticker] and len(buy_list) < portfolio_limit and buymode:
+                                response = upbit.buy_market_order(ticker, balance / portfolio_limit * (1 - fee))
+                                high_price_track[ticker] = current_price_list[ticker]
+                                hold.append(ticker)
+                                buy_price[ticker] = current_price_list[ticker]
+                                buy_list.append(ticker)
+                                telegram_send(f'🛒 목표가 매수\n종목: {ticker}\n매수가: {current_price_list[ticker]}\n목표가: {target_price_list[ticker]}\n{response}')
+                                buy_time_data.update({tickers: False})
+                                buy_price.update({tickers: tickers_now_price2})
+                                d = int(buy_price[tickers])
+                                a = a + 1
                         else:
                             print(tickers + " : 구매전 매수 준비중")
                             print(tickers_now_time_price)
@@ -315,9 +314,7 @@ while True:
                                         buy_price.update({tickers: 0})
                                         a = a + 1
 
-                                if (tickers_ma12 - tickers_ma21) < (
-                                        tickers_ma12_1mb - tickers_ma21_1mb) or tickers_signal > (
-                                        tickers_ma12 - tickers_ma21):
+                                if (tickers_ma12 - tickers_ma21) < (tickers_ma12_1mb - tickers_ma21_1mb) or tickers_signal > (tickers_ma12 - tickers_ma21):
                                     amount = upbit.get_balance(ticker)
                                     response = upbit.sell_market_order(ticker, amount)
                                     hold.remove(ticker)
